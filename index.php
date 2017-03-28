@@ -10,8 +10,8 @@ else{
     $logged='yes';
     $mid= $_SESSION['login'];
 }
-$msg1= $msg2="";
-$phone = $mcode = $mname = $place = "";
+$msg1= $msg2 =$msg3 = "";
+$mphone = $phone = $mcode = $mname = $place = "";
 $logdisp = 'none';
 $rdisp = 'block';
 $ldisp = 'none';
@@ -40,12 +40,14 @@ if($num>0)
         $logdisp='block';
         $rdisp='none';
         $ldisp='block';
+		$fmcode= 'none';
   }
 }
 else
 {
 $msg1="Your mobile is not registered!! Please register!!";
 $logdisp = 'block';
+$fmcode = 'none';
 }
 }
 
@@ -71,10 +73,12 @@ if($numa>0)
 	 $logdisp='block';
 	 $rdisp='none';
 	 $ldisp='block';
+	 $fmcode='none';
 }
 else
 {
 $msg3="Entered mobile is not registered!!";
+$logdisp='none';
 $fmcode = 'block';
 }
 }
@@ -186,7 +190,71 @@ function changelike(imageid=0) {
 }
 }
 </script>
+<script type="text/javascript">
+function valid1()
+{
+if(document.register.mname.value!=="")
+{ 
+var re = new RegExp("^[a-zA-Z0-9_ ]*$");
+ if(!re.test(document.register.mname.value)){
+    alert("Invalid name!!"); 
+    return false;
+ }    
+}
+if(document.register.place.value!=="")
+{ 
+var re = new RegExp("^[a-zA-Z0-9_ ]*$");
+ if(!re.test(document.register.place.value)){
+    alert("Invalid Place!!"); 
+    return false;
+ }    
+}
+if(document.register.phone.value!=="")
+{ 
+    var reg = new RegExp("^[0-9]{10}$");
+ if(!reg.test(document.register.phone.value)){
+    alert("Invalid Phone number!!");
+    return false;
+ }    
+}
 
+return true;
+}
+function valid2()
+{
+	if(document.login.phone.value!=="")
+{ 
+    var reg = new RegExp("^[0-9]{10}$");
+ if(!reg.test(document.login.phone.value)){
+    alert("Invalid Phone number!!");
+    return false;
+ }    
+}
+if(document.login.mcode.value!=="")
+{ 
+    var reg = new RegExp("^[0-9]{5}$");
+ if(!reg.test(document.login.mcode.value)){
+    alert("Enter 5 digit member code!!"); 
+    return false;
+ }    
+}
+	return true;
+}
+function valid3()
+{
+	if(document.mcode.mphone.value!=="")
+{ 
+    var reg = new RegExp("^[0-9]{10}$");
+ if(!reg.test(document.mcode.mphone.value)){
+    alert("Invalid Phone number!!"); 
+    return false;
+ }    
+}
+
+
+	return true;
+}
+</script>
 <body class="w3-light-grey w3-content" style="max-width:1600px">
 <!-- Sidebar/menu -->
 <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
@@ -235,10 +303,10 @@ function changelike(imageid=0) {
 	<div id="register" class="w3-padding-bottom" style="display:<?php echo $rdisp; ?>">
       <p>Register with your mobile number to join with us!</p>
                <p class="w3-text-red"><?php echo $msg1;?><?php echo $msg1="";?></p>
-      <form name="register" method="post">
-        <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Name" required name="mname"></p>
-        <p style="padding-bottom:16px;"><input class="w3-col s2 text-center w3-input w3-border w3-padding-16" type="text" readonly value="+91"><input class="w3-col s10 w3-input w3-border w3-padding-16" type="text" placeholder="Mobile" required name="phone"></p><br>
-        <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Place" required name="place"></p>
+      <form name="register" method="post" onsubmit="return valid1();">
+        <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Name" required name="mname" maxlength="20"></p>
+        <p style="padding-bottom:16px;"><input class="w3-col s2 text-center w3-input w3-border w3-padding-16" type="text" readonly value="+91"><input class="w3-col s10 w3-input w3-border w3-padding-16" type="text" placeholder="Mobile" required name="phone" maxlength="10"></p><br>
+        <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Place" required name="place" maxlength="20"></p>
         <table width="100%"><tr><td><input type="submit" name="register" value="Register" class="w3-button w3-dgrey"></td><td class="w3-padding-left">Already a member?     <span id="llink"><u>Login</u></span></td></tr></table>
       </form>
     	</div>
@@ -246,9 +314,9 @@ function changelike(imageid=0) {
         <div id="login" class="w3-padding-bottom" style="display:<?php echo $ldisp; ?>">
       <p>Member? Login with your mobile number here!</p>
                <p class="w3-text-red"><?php echo $msg2;?><?php echo $msg2="";?></p>
-      <form name="login" method="post">
-        <p class="w3-padding-16"><input class="w3-col s2 text-center w3-input w3-border w3-padding-16" type="text" readonly value="+91"><input class="w3-col s10 w3-input w3-border w3-padding-16" type="text" placeholder="Mobile" required name="phone"></p><br>
-        <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Member code" required name="mcode"></p>
+      <form name="login" method="post" onsubmit="return valid2();">
+        <p class="w3-padding-16"><input class="w3-col s2 text-center w3-input w3-border w3-padding-16" type="text" readonly value="+91"><input class="w3-col s10 w3-input w3-border w3-padding-16" type="text" placeholder="Mobile" required name="phone" maxlength="10"></p><br>
+        <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Member code" required name="mcode"  maxlength="5"></p>
         <table width="100%"><tr><td><input type="submit" name="login" value="Login" class="w3-button w3-dgrey"></td><td class="w3-padding-left">Forgot member code? <span id="mlink"><u>Send again</u></span></td><td class="w3-padding-left">New member?     <span id="rlink"><u>Register</u></span></td></tr></table>
       </form>
     	</div>
@@ -266,8 +334,8 @@ function changelike(imageid=0) {
     <div class="w3-container w3-center">
 	<p>Enter your registered mobile number to get new member code!</p>
                <p class="w3-text-red"><?php echo $msg3;?><?php echo $msg3="";?></p>
-      <form name="mcode" method="post">
-        <p class="w3-padding-16"><input class="w3-col s2 text-center w3-input w3-border w3-padding-16" type="text" readonly value="+91"><input class="w3-col s10 w3-input w3-border w3-padding-16" type="text" placeholder="Mobile" required name="mphone"></p><br>
+      <form name="mcode" method="post" onsubmit="return valid3();">
+        <p class="w3-padding-16"><input class="w3-col s2 text-center w3-input w3-border w3-padding-16" type="text" readonly value="+91"><input class="w3-col s10 w3-input w3-border w3-padding-16" type="text" placeholder="Mobile" required name="mphone"  maxlength="10"></p><br>
         <div class="w3-padding-16"><input type="submit" name="mcode" value="Send Code" class="w3-button w3-dgrey"></div>
       </form>
  
