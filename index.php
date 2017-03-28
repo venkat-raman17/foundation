@@ -1,215 +1,9 @@
-<?php
-session_start();
-include("dbconnection.php");
-$mid= "0";
-
-
-if (!isset($_SESSION['login']))
-{
-    $logged='no';
-}
-else{
-    $logged='yes';
-    $mid= $_SESSION['login'];
-}
-
-
-
-$msg1= $msg2 =$msg3 = "";
-$mphone = $phone = $mcode = $mname = $place = "";
-$logdisp = 'none';
-$rdisp = 'block';
-$ldisp = 'none';
-$fmcode= 'none';
-
-if(isset($_POST['login']))
-{
-$phone=test_input($_POST['phone']);
-$mcode=test_input($_POST['mcode']);
-$ret=mysqli_query($conn,"SELECT * FROM member WHERE phone='".$phone."'");
-$num=mysqli_fetch_assoc($ret);
-if($num>0)
-{
- if($num['mcode']==$mcode){
-	$extra="index.php";
-        $mid=$num['mid'];
-        $_SESSION['mname']=$mname=$num['mname'];
-        $_SESSION['phone']=$phone=$num['phone'];
-        $_SESSION['place']=$place=$num['place'];
-	$_SESSION['login']=$mid;
-	echo "<script>window.location.href='".$extra."'</script>";
-	exit();
-     }
- else{
-      	$msg2="Wrong member code!!";
-        $logdisp='block';
-        $rdisp='none';
-        $ldisp='block';
-		$fmcode= 'none';
-  }
-}
-else
-{
-$msg1="Your mobile is not registered!! Please register!!";
-$logdisp = 'block';
-$fmcode = 'none';
-}
-}
-
-
-
-if(isset($_POST['mcode']))
-{
-$mphone=test_input($_POST['mphone']);
-$reta=mysqli_query($conn,"SELECT * FROM member WHERE phone='".$mphone."'");
-$numa=mysqli_fetch_assoc($reta);
-if($numa>0)
-{
- 	$digits = 5;
-	$mcode = 0;
-	while($mcode == 0){
-		$mcode = rand(pow(10, $digits-1), pow(10, $digits)-1);
-		$retq=mysqli_query($conn,"SELECT * FROM member WHERE mcode=".$mcode);
-		$numq=mysqli_fetch_assoc($retq);
-		if($numq>0){
-			$mcode=0;
-		}
-	}
-	     /* $authKey = "114509ADXELCMklvhG574cfd32";
-		$mobileNumber = $mphone;
-		$senderId = "JBMEMC";
-		$message = urlencode("You have requested for new member code. Your new member code is ".$mcode.".");
-		$route = "default";
-		$postData = array(
-		    'authkey' => $authKey,
-		    'mobiles' => $mobileNumber,
-		    'message' => $message,
-		    'sender' => $senderId,
-		    'route' => $route
-		);
-		$url="http://api.msg91.com/api/sendhttp.php";
-		$ch = curl_init();
-		curl_setopt_array($ch, array(
-		    CURLOPT_URL => $url,
-		    CURLOPT_RETURNTRANSFER => true,
-		    CURLOPT_POST => true,
-		    CURLOPT_POSTFIELDS => $postData
-		));
-
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-
-		curl_exec($ch);
-		if(curl_errno($ch))
-		{
-		 $msg3=curl_error($ch);
-		 $logdisp='none';
-		 $rdisp='none';
-		 $ldisp='none';
-		 $fmcode='block';
-		}
-		else{   */
-			 $sql=mysqli_query($conn,"update member set mcode=".$mcode." where phone = '".$mphone."'");
-			 $msg2="New member code is sent to your mobile!!";
-			 $logdisp='block';
-			 $rdisp='none';
-			 $ldisp='block';
-			 $fmcode='none';
-	// }
-}
-else
-{
-$msg3="Entered mobile is not registered!!";
-$logdisp='none';
-$fmcode = 'block';
-}
-}
-
-
-
-if(isset($_POST['register']))
-{
-$phone=test_input($_POST['phone']);
-$mname=test_input($_POST['mname']);
-$place=test_input($_POST['place']);
-$ret=mysqli_query($conn,"SELECT * FROM member WHERE phone='".$phone."'");
-$num=mysqli_fetch_assoc($ret);
-if($num==0)
-{
-$digits = 5;
-$mcode = 0;
-while($mcode == 0){
-	$mcode = rand(pow(10, $digits-1), pow(10, $digits)-1);
-	$retq=mysqli_query($conn,"SELECT * FROM member WHERE mcode=".$mcode);
-	$numq=mysqli_fetch_assoc($retq);
-	if($numq>0){
-		$mcode=0;
-	}
-}
-/*
-$authKey = "114509ADXELCMklvhG574cfd32";
-$mobileNumber = $phone;
-$senderId = "JBMEMC";
-$message = urlencode("Thanks for joining as a member. Your member code is ".$mcode.".");
-$route = "Transactional Route";
-$postData = array(
-    'authkey' => $authKey,
-    'mobiles' => $mobileNumber,
-    'message' => $message,
-    'sender' => $senderId,
-    'route' => $route
-);
-$url="https://control.msg91.com/api/sendhttp.php";
-$ch = curl_init();
-curl_setopt_array($ch, array(
-    CURLOPT_URL => $url,
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_POST => true,
-    CURLOPT_POSTFIELDS => $postData
-));
-
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-
-curl_exec($ch);
-if(curl_errno($ch))
-{
- $msg1=curl_error($ch);
- $logdisp='block';
- $rdisp='block';
- $ldisp='none';
-}
-else{ */
- $sql=mysqli_query($conn,"INSERT into member (mname,phone,place,mcode) values ('".$mname."','".$phone."','".$place."',".$mcode.")");
- $msg2="Successfully registered!! Login using member code sent to your mobile!!";
- $logdisp='block';
- $rdisp='none';
- $ldisp='block';
-/*}
-curl_close($ch); */
-}
-else
-{
-$msg2="Your mobile is already registered!! Please login!!";
- $logdisp='block';
- $rdisp='none';
- $ldisp='block';
-}
-}
-
-
-
-function test_input($data) {
-  $data = trim($data);
-  $data = stripslashes($data);
-  $data = htmlspecialchars($data);
-  return $data;
-}
-
+<?php 
+include("content.php");
 ?>
 <!DOCTYPE html>
 <html>
-<title>S.R. Jawahar Babu - Blog</title>
+<title>S.R. Jawahar Babu - Timeline</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="assets/css/w3.css">
@@ -343,10 +137,10 @@ if(document.login.mcode.value!=="")
 
 function valid3()
 {
-	if(document.mcode.mphone.value!=="")
+	if(document.fmcode.mphone.value!=="")
 { 
     var reg = new RegExp("^[0-9]{10}$");
- if(!reg.test(document.mcode.mphone.value)){
+ if(!reg.test(document.fmcode.mphone.value)){
     alert("Invalid Phone number!!"); 
     return false;
  }    
@@ -443,9 +237,9 @@ return true;
     <div class="w3-container w3-center">
 	<p>Enter your registered mobile number to get new member code!</p>
                <p class="w3-text-red"><?php echo $msg3;?><?php echo $msg3="";?></p>
-      <form name="mcode" method="post" onsubmit="return valid3();">
+      <form name="fmcode" method="post" onsubmit="return valid3();">
         <p class="w3-padding-16"><input class="w3-col s2 text-center w3-input w3-border w3-padding-16" type="text" readonly value="+91"><input class="w3-col s10 w3-input w3-border w3-padding-16" type="text" placeholder="Mobile" required name="mphone"  maxlength="10"></p><br>
-        <div class="w3-padding-16"><input type="submit" name="mcode" value="Send Code" class="w3-button w3-dgrey"></div>
+        <div class="w3-padding-16"><input type="submit" name="fmcode" value="Send Code" class="w3-button w3-dgrey"></div>
       </form>
  
 	</div>
@@ -505,9 +299,9 @@ return true;
 		<table style="width: 100%;">
 		<tr><td ><i id="101" class="like w3-btn w3-grey w3-circle fa fa-thumbs-up w3-xlarge" onclick="changelike(this.id);"></i></td>
                     <td><span id="t101">0</span><span id="s101"> like</span></td>
-		<td><div id="share-buttons"><a class="fb" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" /></a>
-		<a class="gp" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/google.png" alt="Google" /></a>
-		<a class="tt" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" /></a></div></td>
+		<td><div id="share-buttons"><a class="fb" target="_blank"><img src="assets/img/facebook.png" alt="Facebook" /></a>
+		<a class="gp" target="_blank"><img src="assets/img/google.png" alt="Google" /></a>
+		<a class="tt" target="_blank"><img src="assets/img/twitter.png" alt="Twitter" /></a></div></td>
 		</tr></table>
 	</div>
       </div>
@@ -525,9 +319,10 @@ return true;
 		<table style="width: 100%;">
 		<tr><td ><i id="102" class="like w3-btn w3-grey w3-circle fa fa-thumbs-up w3-xlarge" onclick="changelike(this.id);"></i></td>
 		<td><span id="t102">0</span><span id="s102"> like</span></td>
-		<td><div id="share-buttons"><a class="fb" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" /></a>
-		<a class="gp" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/google.png" alt="Google" /></a>
-		<a class="tt" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" /></a></div></td></tr></table>
+		<td><div id="share-buttons"><a class="fb" target="_blank"><img src="assets/img/facebook.png" alt="Facebook" /></a>
+		<a class="gp" target="_blank"><img src="assets/img/google.png" alt="Google" /></a>
+		<a class="tt" target="_blank"><img src="assets/img/twitter.png" alt="Twitter" /></a></div></td>
+		</tr></table>
 	</div>
       </div>
     </div>
@@ -550,10 +345,10 @@ return true;
 		<table style="width: 100%;">
 		<tr><td ><i id="103" class="like w3-btn w3-grey w3-circle fa fa-thumbs-up w3-xlarge" onclick="changelike(this.id);"></i></td>
 		<td><span id="t103">0</span><span id="s103"> like</span></td>
-		<td><div id="share-buttons"><a class="fb" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" /></a>
-		<a class="gp" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/google.png" alt="Google" /></a>
-		<a class="tt" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" /></a></div></td></tr>
-		</table>
+		<td><div id="share-buttons"><a class="fb" target="_blank"><img src="assets/img/facebook.png" alt="Facebook" /></a>
+		<a class="gp" target="_blank"><img src="assets/img/google.png" alt="Google" /></a>
+		<a class="tt" target="_blank"><img src="assets/img/twitter.png" alt="Twitter" /></a></div></td>
+		</tr></table>
 	</div>
       </div>
     </div>
@@ -572,12 +367,10 @@ return true;
 					
 					<td ><i id="104" class="like w3-btn w3-grey w3-circle fa fa-thumbs-up w3-xlarge" onclick="changelike(this.id);"></i></td>
 					<td><span id="t104">0</span><span id="s104"> like</span></td>
-					<td><div id="share-buttons"><a class="fb" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" /></a>
-		<a class="gp" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/google.png" alt="Google" /></a>
-		<a class="tt" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" /></a></div></td>
-
-					</tr>
-			</table>
+					<td><div id="share-buttons"><a class="fb" target="_blank"><img src="assets/img/facebook.png" alt="Facebook" /></a>
+		<a class="gp" target="_blank"><img src="assets/img/google.png" alt="Google" /></a>
+		<a class="tt" target="_blank"><img src="assets/img/twitter.png" alt="Twitter" /></a></div></td>
+		</tr></table>
 				</div>
       </div>
     </div>
@@ -596,12 +389,10 @@ return true;
 					
 					<td ><i id="105" class="like w3-btn w3-grey w3-circle fa fa-thumbs-up w3-xlarge" onclick="changelike(this.id);"></i></td>
 					<td><span id="t105">0</span><span id="s105"> like</span></td>                                       
-					<td><div id="share-buttons"><a class="fb" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" /></a>
-		<a class="gp" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/google.png" alt="Google" /></a>
-		<a class="tt" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" /></a></div></td>
-
-					</tr>
-			</table>
+					<td><div id="share-buttons"><a class="fb" target="_blank"><img src="assets/img/facebook.png" alt="Facebook" /></a>
+		<a class="gp" target="_blank"><img src="assets/img/google.png" alt="Google" /></a>
+		<a class="tt" target="_blank"><img src="assets/img/twitter.png" alt="Twitter" /></a></div></td>
+		</tr></table>
 				</div>
       </div>
     </div>
@@ -617,12 +408,10 @@ return true;
 					
 					<td ><i id="106" class="like w3-btn w3-grey w3-circle fa fa-thumbs-up w3-xlarge" onclick="changelike(this.id);"></i></td>
                                         <td><span id="t106">0</span> <span id="s106"> like</span></td>
-					<td><div id="share-buttons"><a class="fb" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" /></a>
-		<a class="gp" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/google.png" alt="Google" /></a>
-		<a class="tt" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" /></a></div></td>
-
-					</tr>
-			</table>
+					<td><div id="share-buttons"><a class="fb" target="_blank"><img src="assets/img/facebook.png" alt="Facebook" /></a>
+		<a class="gp" target="_blank"><img src="assets/img/google.png" alt="Google" /></a>
+		<a class="tt" target="_blank"><img src="assets/img/twitter.png" alt="Twitter" /></a></div></td>
+		</tr></table>
 				</div>
       
       </div>

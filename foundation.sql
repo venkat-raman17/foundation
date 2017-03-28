@@ -27,6 +27,7 @@ CREATE TABLE member (
   mname varchar(20) NOT NULL,
   place varchar(20) NOT NULL,
   mcode int NOT NULL DEFAULT 0,
+  vote int DEFAULT 0,
   joindate timestamp DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 

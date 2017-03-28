@@ -1,211 +1,13 @@
-<?php
-session_start();
-include("dbconnection.php");
-$mid= "0";
+<?php 
+include("content.php");
 
-
-if (!isset($_SESSION['login']))
+$msg4="";
+if(isset($_POST['feedback']))
 {
-    $logged='no';
+$feed=test_input($_POST['feed']);
+$sql=mysqli_query($conn,"INSERT into feedback values (".$_SESSION['login'].",'".$feed."')");
+$msg4="  Thanks. Your feedback has been submitted!!";
 }
-else{
-    $logged='yes';
-    $mid= $_SESSION['login'];
-}
-
-
-
-$msg1= $msg2 =$msg3 = "";
-$mphone = $phone = $mcode = $mname = $place = "";
-$logdisp = 'none';
-$rdisp = 'block';
-$ldisp = 'none';
-$fmcode= 'none';
-
-if(isset($_POST['login']))
-{
-$phone=test_input($_POST['phone']);
-$mcode=test_input($_POST['mcode']);
-$ret=mysqli_query($conn,"SELECT * FROM member WHERE phone='".$phone."'");
-$num=mysqli_fetch_assoc($ret);
-if($num>0)
-{
- if($num['mcode']==$mcode){
-	$extra="index.php";
-        $mid=$num['mid'];
-        $_SESSION['mname']=$mname=$num['mname'];
-        $_SESSION['phone']=$phone=$num['phone'];
-        $_SESSION['place']=$place=$num['place'];
-	$_SESSION['login']=$mid;
-	echo "<script>window.location.href='".$extra."'</script>";
-	exit();
-     }
- else{
-      	$msg2="Wrong member code!!";
-        $logdisp='block';
-        $rdisp='none';
-        $ldisp='block';
-		$fmcode= 'none';
-  }
-}
-else
-{
-$msg1="Your mobile is not registered!! Please register!!";
-$logdisp = 'block';
-$fmcode = 'none';
-}
-}
-
-
-
-if(isset($_POST['mcode']))
-{
-$mphone=test_input($_POST['mphone']);
-$reta=mysqli_query($conn,"SELECT * FROM member WHERE phone='".$mphone."'");
-$numa=mysqli_fetch_assoc($reta);
-if($numa>0)
-{
- 	$digits = 5;
-	$mcode = 0;
-	while($mcode == 0){
-		$mcode = rand(pow(10, $digits-1), pow(10, $digits)-1);
-		$retq=mysqli_query($conn,"SELECT * FROM member WHERE mcode=".$mcode);
-		$numq=mysqli_fetch_assoc($retq);
-		if($numq>0){
-			$mcode=0;
-		}
-	}
-	     /* $authKey = "114509ADXELCMklvhG574cfd32";
-		$mobileNumber = $mphone;
-		$senderId = "JBMEMC";
-		$message = urlencode("You have requested for new member code. Your new member code is ".$mcode.".");
-		$route = "default";
-		$postData = array(
-		    'authkey' => $authKey,
-		    'mobiles' => $mobileNumber,
-		    'message' => $message,
-		    'sender' => $senderId,
-		    'route' => $route
-		);
-		$url="http://api.msg91.com/api/sendhttp.php";
-		$ch = curl_init();
-		curl_setopt_array($ch, array(
-		    CURLOPT_URL => $url,
-		    CURLOPT_RETURNTRANSFER => true,
-		    CURLOPT_POST => true,
-		    CURLOPT_POSTFIELDS => $postData
-		));
-
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-
-		curl_exec($ch);
-		if(curl_errno($ch))
-		{
-		 $msg3=curl_error($ch);
-		 $logdisp='none';
-		 $rdisp='none';
-		 $ldisp='none';
-		 $fmcode='block';
-		}
-		else{   */
-			 $sql=mysqli_query($conn,"update member set mcode=".$mcode." where phone = '".$mphone."'");
-			 $msg2="New member code is sent to your mobile!!";
-			 $logdisp='block';
-			 $rdisp='none';
-			 $ldisp='block';
-			 $fmcode='none';
-	// }
-}
-else
-{
-$msg3="Entered mobile is not registered!!";
-$logdisp='none';
-$fmcode = 'block';
-}
-}
-
-
-if(isset($_POST['register']))
-{
-$phone=test_input($_POST['phone']);
-$mname=test_input($_POST['mname']);
-$place=test_input($_POST['place']);
-$ret=mysqli_query($conn,"SELECT * FROM member WHERE phone='".$phone."'");
-$num=mysqli_fetch_assoc($ret);
-if($num==0)
-{
-$digits = 5;
-$mcode = 0;
-while($mcode == 0){
-	$mcode = rand(pow(10, $digits-1), pow(10, $digits)-1);
-	$retq=mysqli_query($conn,"SELECT * FROM member WHERE mcode=".$mcode);
-	$numq=mysqli_fetch_assoc($retq);
-	if($numq>0){
-		$mcode=0;
-	}
-}
-/*
-$authKey = "114509ADXELCMklvhG574cfd32";
-$mobileNumber = $phone;
-$senderId = "JBMEMC";
-$message = urlencode("Thanks for joining as a member. Your member code is ".$mcode.".");
-$route = "Transactional Route";
-$postData = array(
-    'authkey' => $authKey,
-    'mobiles' => $mobileNumber,
-    'message' => $message,
-    'sender' => $senderId,
-    'route' => $route
-);
-$url="https://control.msg91.com/api/sendhttp.php";
-$ch = curl_init();
-curl_setopt_array($ch, array(
-    CURLOPT_URL => $url,
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_POST => true,
-    CURLOPT_POSTFIELDS => $postData
-));
-
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-
-curl_exec($ch);
-if(curl_errno($ch))
-{
- $msg1=curl_error($ch);
- $logdisp='block';
- $rdisp='block';
- $ldisp='none';
-}
-else{ */
- $sql=mysqli_query($conn,"INSERT into member (mname,phone,place,mcode) values ('".$mname."','".$phone."','".$place."',".$mcode.")");
- $msg2="Successfully registered!! Login using member code sent to your mobile!!";
- $logdisp='block';
- $rdisp='none';
- $ldisp='block';
-/*}
-curl_close($ch); */
-}
-else
-{
-$msg2="Your mobile is already registered!! Please login!!";
- $logdisp='block';
- $rdisp='none';
- $ldisp='block';
-}
-}
-
-
-
-
-function test_input($data) {
-  $data = trim($data);
-  $data = stripslashes($data);
-  $data = htmlspecialchars($data);
-  return $data;
-}
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -301,15 +103,23 @@ if(document.login.mcode.value!=="")
 
 function valid3()
 {
-	if(document.mcode.mphone.value!=="")
+	if(document.fmcode.mphone.value!=="")
 { 
     var reg = new RegExp("^[0-9]{10}$");
- if(!reg.test(document.mcode.mphone.value)){
+ if(!reg.test(document.fmcode.mphone.value)){
     alert("Invalid Phone number!!"); 
     return false;
  }    
 }
 return true;
+}
+
+function validfeed(){
+    if("no" === "<?php echo $logged;?>"){
+        $("#nolog").css("display", "block");
+		return false;
+		}
+		return true;
 }
 </script>
 <body class="w3-light-grey w3-content" style="max-width:1600px">
@@ -394,9 +204,9 @@ return true;
     <div class="w3-container w3-center">
 	<p>Enter your registered mobile number to get new member code!</p>
                <p class="w3-text-red"><?php echo $msg3;?><?php echo $msg3="";?></p>
-      <form name="mcode" method="post" onsubmit="return valid3();">
+      <form name="fmcode" method="post" onsubmit="return valid3();">
         <p class="w3-padding-16"><input class="w3-col s2 text-center w3-input w3-border w3-padding-16" type="text" readonly value="+91"><input class="w3-col s10 w3-input w3-border w3-padding-16" type="text" placeholder="Mobile" required name="mphone"  maxlength="10"></p><br>
-        <div class="w3-padding-16"><input type="submit" name="mcode" value="Send Code" class="w3-button w3-dgrey"></div>
+        <div class="w3-padding-16"><input type="submit" name="fmcode" value="Send Code" class="w3-button w3-dgrey"></div>
       </form>
  
 	</div>
@@ -440,12 +250,13 @@ return true;
   <div class="w3-container w3-padding-large w3-border-bottom" style="margin-bottom:32px">
       <h4 class="w3-center"><b>Feedback</b></h4>
       <hr>
-      <div class="w3-col s12 w3-container w3-white w3-margin-bottom" style=" height: 450px;">
-      <h6 class="w3-padding-left w3-padding-top">Write to us here..</h6>
+      <div class="w3-col s12 w3-container w3-white w3-margin-bottom" style=" height: 550px;">
+      <h6 class=" w3-padding-top">Write to us here..</h6>
+	  <p class="w3-text-red"><?php echo $msg4;?><?php echo $msg4="";?></p>
     <div class="w3-padding-8">
-        <form>
-            <div><textarea maxlength="510" rows="15" cols="35" wrap="soft"></textarea></div>
-            <div class="w3-padding-left"><input class="w3-button w3-dgrey" value="Submit" type="button"></div>
+        <form name="feedback" id="feedback" method="post" onsubmit="return validfeed();">
+            <div><textarea maxlength="510" rows="15" cols="35" wrap="soft" required name="feed" form="feedback"></textarea></div>
+            <div class="w3-padding-left w3-padding-bottom"><input id="feedsub" name="feedback" class="w3-button w3-dgrey" value="Submit" type="submit"></div>
         </form>
     </div>
     </div>

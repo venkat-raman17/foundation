@@ -1,6 +1,6 @@
 <?php
 $username = "root";
-$password = "root@123";
+$password = "cacti";
 $servername = "localhost";
 $dbname = "foundation";
 $conn = mysqli_connect($servername, $username, $password, $dbname);
