@@ -126,6 +126,7 @@ $fmcode = 'block';
 }
 
 
+
 if(isset($_POST['register']))
 {
 $phone=test_input($_POST['phone']);
@@ -209,12 +210,13 @@ function test_input($data) {
 ?>
 <!DOCTYPE html>
 <html>
-<title>S.R. Jawahar Babu - Feedback</title>
+<title>S.R. Jawahar Babu - Vote</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="assets/css/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <script src="assets/js/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
@@ -224,6 +226,13 @@ $('#user').click(function()
         $("#log").css("display", "block");}
     else{
         $("#logged").css("display", "block");}
+});
+$('#vote').click(function()
+{
+    if("no" === "<?php echo $logged;?>"){
+        $("#nolog").css("display", "block");}
+    else{      
+         $(this).toggleClass('w3-blue w3-grey');  }
 });
 $('#logreg').click(function()
 {
@@ -327,9 +336,9 @@ return true;
   <div class="w3-bar-block">
                         <a href="index.php" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-medium"><i class="fa fa-address-card-o fa-fw w3-margin-right w3-medium"></i> Timeline</a>
                         <a href="profile.php" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-medium"><i class="fa fa-newspaper-o fa-fw w3-margin-right w3-medium"></i>  Profile</a>
-                        <a href="vote.php" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-medium"><i class="fa fa-thumbs-up fa-fw w3-margin-right w3-medium"></i>  Vote</a>
+                        <a href="vote.php" onclick="w3_close()" class="w3-text-grey w3-bar-item w3-button w3-padding w3-medium"><i class="fa fa-thumbs-up fa-fw w3-margin-right w3-medium"></i>  Vote</a>
                         <a href="gallery.php" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-medium"><i class="fa fa-picture-o fa-fw w3-margin-right w3-medium"></i>  Gallery</a>
-			<a href="feedback.php" onclick="w3_close()" class="w3-text-grey w3-bar-item w3-button w3-padding w3-medium"><i class="fa fa-pencil-square-o fa-fw w3-margin-right w3-medium"></i>  Feedback</a>
+			<a href="feedback.php" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-medium"><i class="fa fa-pencil-square-o fa-fw w3-margin-right w3-medium"></i>  Feedback</a>
   </div>
 </nav>
 
@@ -341,7 +350,7 @@ return true;
 
   <!-- Header -->
   <header id="portfolio">
-    <a id="user" class="w3-hover-indigo" href="#"><i class="fa fa-user fa-fw w3-margin-right w3-xxlarge w3-right" style="padding-top: 16px"></i></a>
+    <a class="w3-hover-blue-grey" href="#"><i class="fa fa-user fa-fw w3-margin-right w3-xxlarge w3-right" style="padding-top: 16px"></i></a>
     <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
     <div class="w3-container">
     <h1><b>S.R.Jawahar Babu, B.E.,M.B.A.</b></h1>
@@ -437,17 +446,18 @@ return true;
   </div>
 </div>
 
-  <div class="w3-container w3-padding-large w3-border-bottom" style="margin-bottom:32px">
-      <h4 class="w3-center"><b>Feedback</b></h4>
+  <div class="w3-center w3-centered w3-container w3-padding-large w3-border-bottom" style="align-content:center;margin-bottom:32px">
+      <h4><b>Vote</b></h4>
       <hr>
-      <div class="w3-col s12 w3-container w3-white w3-margin-bottom" style=" height: 450px;">
-      <h6 class="w3-padding-left w3-padding-top">Write to us here..</h6>
-    <div class="w3-padding-8">
-        <form>
-            <div><textarea maxlength="510" rows="15" cols="35" wrap="soft"></textarea></div>
-            <div class="w3-padding-left"><input class="w3-button w3-dgrey" value="Submit" type="button"></div>
-        </form>
+      <div class="w3-col s12 w3-container w3-white w3-margin-bottom" style=" height: 400px;">
+      <h6 class=" w3-padding-top">Make your support here. Click the button to register your vote to us.</h6>
+    <div  class="w3-display-middle" style="position: relative;">
+        <i id="vote" class="w3-jumbo w3-btn w3-grey w3-circle fa fa-thumbs-o-up"></i>
     </div>
+
+            <div id="resp" class="w3-hide" style="position: relative; bottom: 0" >
+                    <h5>Thanks for voting. Your vote has been registered.</h5>
+</div>
     </div>
     
 

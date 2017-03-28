@@ -2,6 +2,8 @@
 session_start();
 include("dbconnection.php");
 $mid= "0";
+
+
 if (!isset($_SESSION['login']))
 {
     $logged='no';
@@ -10,6 +12,9 @@ else{
     $logged='yes';
     $mid= $_SESSION['login'];
 }
+
+
+
 $msg1= $msg2 =$msg3 = "";
 $mphone = $phone = $mcode = $mname = $place = "";
 $logdisp = 'none';
@@ -51,6 +56,8 @@ $fmcode = 'none';
 }
 }
 
+
+
 if(isset($_POST['mcode']))
 {
 $mphone=test_input($_POST['mphone']);
@@ -68,12 +75,47 @@ if($numa>0)
 			$mcode=0;
 		}
 	}
-	 $sql=mysqli_query($conn,"update member set mcode=".$mcode." where phone = '".$mphone."'");
-	 $msg2="New member code is sent to your mobile!!";
-	 $logdisp='block';
-	 $rdisp='none';
-	 $ldisp='block';
-	 $fmcode='none';
+	     /* $authKey = "114509ADXELCMklvhG574cfd32";
+		$mobileNumber = $mphone;
+		$senderId = "JBMEMC";
+		$message = urlencode("You have requested for new member code. Your new member code is ".$mcode.".");
+		$route = "default";
+		$postData = array(
+		    'authkey' => $authKey,
+		    'mobiles' => $mobileNumber,
+		    'message' => $message,
+		    'sender' => $senderId,
+		    'route' => $route
+		);
+		$url="http://api.msg91.com/api/sendhttp.php";
+		$ch = curl_init();
+		curl_setopt_array($ch, array(
+		    CURLOPT_URL => $url,
+		    CURLOPT_RETURNTRANSFER => true,
+		    CURLOPT_POST => true,
+		    CURLOPT_POSTFIELDS => $postData
+		));
+
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+
+		curl_exec($ch);
+		if(curl_errno($ch))
+		{
+		 $msg3=curl_error($ch);
+		 $logdisp='none';
+		 $rdisp='none';
+		 $ldisp='none';
+		 $fmcode='block';
+		}
+		else{   */
+			 $sql=mysqli_query($conn,"update member set mcode=".$mcode." where phone = '".$mphone."'");
+			 $msg2="New member code is sent to your mobile!!";
+			 $logdisp='block';
+			 $rdisp='none';
+			 $ldisp='block';
+			 $fmcode='none';
+	// }
 }
 else
 {
@@ -82,6 +124,8 @@ $logdisp='none';
 $fmcode = 'block';
 }
 }
+
+
 
 if(isset($_POST['register']))
 {
@@ -102,11 +146,47 @@ while($mcode == 0){
 		$mcode=0;
 	}
 }
+/*
+$authKey = "114509ADXELCMklvhG574cfd32";
+$mobileNumber = $phone;
+$senderId = "JBMEMC";
+$message = urlencode("Thanks for joining as a member. Your member code is ".$mcode.".");
+$route = "Transactional Route";
+$postData = array(
+    'authkey' => $authKey,
+    'mobiles' => $mobileNumber,
+    'message' => $message,
+    'sender' => $senderId,
+    'route' => $route
+);
+$url="https://control.msg91.com/api/sendhttp.php";
+$ch = curl_init();
+curl_setopt_array($ch, array(
+    CURLOPT_URL => $url,
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_POST => true,
+    CURLOPT_POSTFIELDS => $postData
+));
+
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+
+curl_exec($ch);
+if(curl_errno($ch))
+{
+ $msg1=curl_error($ch);
+ $logdisp='block';
+ $rdisp='block';
+ $ldisp='none';
+}
+else{ */
  $sql=mysqli_query($conn,"INSERT into member (mname,phone,place,mcode) values ('".$mname."','".$phone."','".$place."',".$mcode.")");
  $msg2="Successfully registered!! Login using member code sent to your mobile!!";
  $logdisp='block';
  $rdisp='none';
  $ldisp='block';
+/*}
+curl_close($ch); */
 }
 else
 {
@@ -116,12 +196,16 @@ $msg2="Your mobile is already registered!! Please login!!";
  $ldisp='block';
 }
 }
+
+
+
 function test_input($data) {
   $data = trim($data);
   $data = stripslashes($data);
   $data = htmlspecialchars($data);
   return $data;
 }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -131,9 +215,21 @@ function test_input($data) {
 <link rel="stylesheet" href="assets/css/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style type="text/css">
+#share-buttons img {
+width: 35px;
+padding: 5px;
+border: 0;
+box-shadow: 0;
+display: inline;
+}
+</style>
 <script src="assets/js/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
+$(".fb").attr("href", "http://www.facebook.com/sharer.php?u="+location.href);
+$(".gp").attr("href", "https://plus.google.com/share?url="+location.href);
+$(".tt").attr("href", "https://twitter.com/share?url="+location.href);
 $('#user').click(function()
 {
     if("no" === "<?php echo $logged;?>"){
@@ -169,6 +265,7 @@ $('#mlink').click(function()
      $('#log').hide();
 });
 });
+
 function changelike(imageid=0) {
     if("yes" === "<?php echo $logged;?>"){
         var xmlhttp = new XMLHttpRequest();
@@ -190,6 +287,8 @@ function changelike(imageid=0) {
 }
 }
 </script>
+
+
 <script type="text/javascript">
 function valid1()
 {
@@ -220,6 +319,7 @@ if(document.register.phone.value!=="")
 
 return true;
 }
+
 function valid2()
 {
 	if(document.login.phone.value!=="")
@@ -240,6 +340,7 @@ if(document.login.mcode.value!=="")
 }
 	return true;
 }
+
 function valid3()
 {
 	if(document.mcode.mphone.value!=="")
@@ -250,12 +351,14 @@ function valid3()
     return false;
  }    
 }
-
-
-	return true;
+return true;
 }
 </script>
+
+
+
 <body class="w3-light-grey w3-content" style="max-width:1600px">
+
 <!-- Sidebar/menu -->
 <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
   <div class="w3-container">
@@ -266,6 +369,7 @@ function valid3()
     <h4><b>S.R.Jawahar Babu</b></h4>
     <p class="w3-text-grey">Chairman, Pattukottai</p>
   </div>
+
   <div class="w3-bar-block">
                        <a href="index.php" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-grey w3-medium"><i class="fa fa-address-card-o fa-fw w3-margin-right w3-medium"></i> Timeline</a>
                         <a href="profile.php" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-medium"><i class="fa fa-newspaper-o fa-fw w3-margin-right w3-medium"></i>  Profile</a>
@@ -273,15 +377,16 @@ function valid3()
                         <a href="gallery.php" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-medium"><i class="fa fa-picture-o fa-fw w3-margin-right w3-medium"></i>  Gallery</a>
 			<a href="feedback.php" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-medium"><i class="fa fa-pencil-square-o fa-fw w3-margin-right w3-medium"></i>  Feedback</a>
   </div>
+
 </nav>
 
-<!-- Overlay effect when opening sidebar on small screens -->
+
 <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
-<!-- !PAGE CONTENT! -->
+
 <div class="w3-main" style="margin-left:300px">
 
-  <!-- Header -->
+
   <header id="portfolio">
     <a id="user" class="w3-hover-indigo" href="#"><i class="fa fa-user fa-fw w3-margin-right w3-xxlarge w3-right" style="padding-top: 16px"></i></a>
     <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
@@ -292,6 +397,8 @@ function valid3()
     </div>
   </header>
   
+
+
   <div id="log" class="w3-modal" style="display:<?php echo $logdisp; ?>">
   <div class="w3-modal-content w3-animate-zoom">
 	<div class="w3-container w3-grey">
@@ -317,7 +424,7 @@ function valid3()
       <form name="login" method="post" onsubmit="return valid2();">
         <p class="w3-padding-16"><input class="w3-col s2 text-center w3-input w3-border w3-padding-16" type="text" readonly value="+91"><input class="w3-col s10 w3-input w3-border w3-padding-16" type="text" placeholder="Mobile" required name="phone" maxlength="10"></p><br>
         <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Member code" required name="mcode"  maxlength="5"></p>
-        <table width="100%"><tr><td><input type="submit" name="login" value="Login" class="w3-button w3-dgrey"></td><td class="w3-padding-left">Forgot member code? <span id="mlink"><u>Send again</u></span></td><td class="w3-padding-left">New member?     <span id="rlink"><u>Register</u></span></td></tr></table>
+        <table width="100%"><tr><td><input type="submit" name="login" value="Login" class="w3-button w3-dgrey"></td><td class="w3-padding-left">Member code? <span id="mlink"><u>Send again</u></span></td><td class="w3-padding-left">New member?     <span id="rlink"><u>Register</u></span></td></tr></table>
       </form>
     	</div>
 
@@ -325,11 +432,13 @@ function valid3()
   </div>
 </div>
 
+
+
 <div id="fmcode" class="w3-modal" style="display:<?php echo $fmcode; ?>">
   <div class="w3-modal-content w3-animate-zoom">
 	<div class="w3-container w3-grey">
       <span onclick="document.getElementById('fmcode').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
-      <h1>Forgot Member code</h1>
+      <h1>Send Member code</h1>
         </div>
     <div class="w3-container w3-center">
 	<p>Enter your registered mobile number to get new member code!</p>
@@ -353,25 +462,16 @@ function valid3()
         </div>
     <div class="w3-container w3-center">
 	   <table class=" w3-table " style="border:0px">
-               <tr>
-                                                                        <td><b>Name</b></td>
-                                                                        <td><?php echo $_SESSION['mname']; ?></td>
-                                                                </tr>
-                                                                <tr>
-                                                                        <td><b>Mobile</b></td>
-                                                                        <td><?php echo $_SESSION['phone']; ?></td>
-                                                                </tr>
-                                                                <tr>
-                                                                        <td><b>Place </b></td>
-                                                                        <td><?php echo $_SESSION['place']; ?></td>
-                                                                </tr>
-
-                                                </table>
+               <tr><td><b>Name</b></td><td><?php echo $_SESSION['mname']; ?></td></tr>
+               <tr><td><b>Mobile</b></td><td><?php echo $_SESSION['phone']; ?></td></tr>
+               <tr><td><b>Place </b></td><td><?php echo $_SESSION['place']; ?></td></tr></table>
         <div class="w3-padding-8"><a href="logout.php"><button class="w3-button w3-dgrey w3-large">Logout</button></a></div>
 	</div>
   </div>
 </div>
-  
+ 
+
+ 
    <div id="nolog" class="w3-modal" style="display:none">
   <div class="w3-modal-content w3-animate-zoom">
 	<div class="w3-container w3-grey">
@@ -386,29 +486,36 @@ function valid3()
   </div>
 </div>
   
+
+
   <div class="w3-center w3-centered w3-container w3-padding-medium w3-border-bottom" style="align-content:center;margin-bottom:32px">
       <h4><b>Timeline</b></h4>
       <hr>
-    <div class="w3-row-padding">
-    <div class="w3-half w3-container w3-margin-bottom">
+
+<!-- Start of First photo line, One photo line can have two entries-->
+    <div class="w3-row-padding"> 
+
+	<!-- Start of first entry-->
+    <div class="w3-half w3-container w3-margin-bottom"> 
       <img src="assets/img/101.jpg" alt="Norway" style="height: 250px; width:100%" class="w3-hover-opacity">
       <div class="w3-container w3-white" style="height: 550px; position: relative;">
           <div class="w3-col s12"><h5 class="w3-left w3-padding-left"><b>Road Extension Project </b></h5> <p class="w3-right w3-text-grey w3-padding-right">20 Jan 2017</p></div><br>
         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1550s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
         <div class="w3-padding-bottom w3-col s12" style="position: absolute; bottom: 0;"> 
 		<table style="width: 100%;">
-		<tr>
-				
-					
-                    <td ><i id="101" class="like w3-btn w3-grey w3-circle fa fa-thumbs-up w3-xlarge" onclick="changelike(this.id);"></i></td>
+		<tr><td ><i id="101" class="like w3-btn w3-grey w3-circle fa fa-thumbs-up w3-xlarge" onclick="changelike(this.id);"></i></td>
                     <td><span id="t101">0</span><span id="s101"> like</span></td>
-					<td><i class=" w3-btn w3-grey w3-circle fa fa-share-alt w3-xlarge"></i></td>
-
-					</tr>
-			</table>
-				</div>
+		<td><div id="share-buttons"><a class="fb" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" /></a>
+		<a class="gp" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/google.png" alt="Google" /></a>
+		<a class="tt" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" /></a></div></td>
+		</tr></table>
+	</div>
       </div>
     </div>
+	<!-- end of first entry-->
+
+
+	<!-- Start of second entry-->
     <div class="w3-half w3-container w3-margin-bottom">
       <img src="assets/img/102.jpg" alt="Norway" style="height: 250px; width:100%" class="w3-hover-opacity">
       <div class="w3-container w3-white" style="height: 550px; position: relative;">
@@ -416,23 +523,24 @@ function valid3()
         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1550s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software.</p>
         <div class="w3-padding-bottom w3-col s12" style="position: absolute; bottom: 0;"> 
 		<table style="width: 100%;">
-		<tr>
-				
-					
-					<td ><i id="102" class="like w3-btn w3-grey w3-circle fa fa-thumbs-up w3-xlarge" onclick="changelike(this.id);"></i></td>
-					<td><span id="t102">0</span><span id="s102"> like</span></td>
-					<td><i class=" w3-btn w3-grey w3-circle fa fa-share-alt w3-xlarge"></i></td>
-
-					</tr>
-			</table>
-				</div>
-      
+		<tr><td ><i id="102" class="like w3-btn w3-grey w3-circle fa fa-thumbs-up w3-xlarge" onclick="changelike(this.id);"></i></td>
+		<td><span id="t102">0</span><span id="s102"> like</span></td>
+		<td><div id="share-buttons"><a class="fb" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" /></a>
+		<a class="gp" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/google.png" alt="Google" /></a>
+		<a class="tt" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" /></a></div></td></tr></table>
+	</div>
       </div>
     </div>
-  </div>
-  
-  <!-- Second Photo Grid-->
+	<!-- End of second entry-->
+
+  </div><!-- End of First photo line-->
+ 
+
+ 
+  <!-- Second Photo line-->
   <div class="w3-row-padding">
+
+	<!-- Start of third entry-->
     <div class="w3-half w3-container w3-margin-bottom">
       <img src="assets/img/103.jpg" alt="Norway" style="height: 250px; width:100%" class="w3-hover-opacity">
       <div class="w3-container w3-white" style="height: 550px;position: relative;">
@@ -440,18 +548,18 @@ function valid3()
         <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
         <div class="w3-padding-bottom w3-col s12" style="position: absolute; bottom: 0;"> 
 		<table style="width: 100%;">
-		<tr>
-				
-					
-					<td ><i id="103" class="like w3-btn w3-grey w3-circle fa fa-thumbs-up w3-xlarge" onclick="changelike(this.id);"></i></td>
-					<td><span id="t103">0</span><span id="s103"> like</span></td>
-					<td><i class=" w3-btn w3-grey w3-circle fa fa-share-alt w3-xlarge"></i></td>
-
-					</tr>
-			</table>
-				</div>
+		<tr><td ><i id="103" class="like w3-btn w3-grey w3-circle fa fa-thumbs-up w3-xlarge" onclick="changelike(this.id);"></i></td>
+		<td><span id="t103">0</span><span id="s103"> like</span></td>
+		<td><div id="share-buttons"><a class="fb" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" /></a>
+		<a class="gp" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/google.png" alt="Google" /></a>
+		<a class="tt" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" /></a></div></td></tr>
+		</table>
+	</div>
       </div>
     </div>
+<!-- End of third entry-->
+
+
     <div class="w3-half w3-container w3-margin-bottom">
       <img src="assets/img/104.jpg" alt="Norway" style="height: 250px; width:100%" class="w3-hover-opacity">
       <div class="w3-container w3-white" style="height: 550px; position: relative;">
@@ -464,7 +572,9 @@ function valid3()
 					
 					<td ><i id="104" class="like w3-btn w3-grey w3-circle fa fa-thumbs-up w3-xlarge" onclick="changelike(this.id);"></i></td>
 					<td><span id="t104">0</span><span id="s104"> like</span></td>
-					<td><i class=" w3-btn w3-grey w3-circle fa fa-share-alt w3-xlarge"></i></td>
+					<td><div id="share-buttons"><a class="fb" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" /></a>
+		<a class="gp" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/google.png" alt="Google" /></a>
+		<a class="tt" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" /></a></div></td>
 
 					</tr>
 			</table>
@@ -486,7 +596,9 @@ function valid3()
 					
 					<td ><i id="105" class="like w3-btn w3-grey w3-circle fa fa-thumbs-up w3-xlarge" onclick="changelike(this.id);"></i></td>
 					<td><span id="t105">0</span><span id="s105"> like</span></td>                                       
-					<td><i class=" w3-btn w3-grey w3-circle fa fa-share-alt w3-xlarge"></i></td>
+					<td><div id="share-buttons"><a class="fb" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" /></a>
+		<a class="gp" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/google.png" alt="Google" /></a>
+		<a class="tt" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" /></a></div></td>
 
 					</tr>
 			</table>
@@ -505,7 +617,9 @@ function valid3()
 					
 					<td ><i id="106" class="like w3-btn w3-grey w3-circle fa fa-thumbs-up w3-xlarge" onclick="changelike(this.id);"></i></td>
                                         <td><span id="t106">0</span> <span id="s106"> like</span></td>
-					<td><i class=" w3-btn w3-grey w3-circle fa fa-share-alt w3-xlarge"></i></td>
+					<td><div id="share-buttons"><a class="fb" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" /></a>
+		<a class="gp" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/google.png" alt="Google" /></a>
+		<a class="tt" target="_blank"><img src="https://simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" /></a></div></td>
 
 					</tr>
 			</table>
