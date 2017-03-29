@@ -3,17 +3,29 @@ include("content.php");
 ?>
 <!DOCTYPE html>
 <html>
-<title>S.R. Jawahar Babu - Gallery</title>
+<title>S.R. Jawahar Babu - Timeline</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="assets/css/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="assets/css/lightbox.min.css">
+<style type="text/css">
+#share-buttons img {
+width: 35px;
+padding: 5px;
+border: 0;
+box-shadow: 0;
+display: inline;
+}
+</style>
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/lightbox-plus-jquery.min.js"></script>
 <script>
-	$(document).ready(function(){
+$(document).ready(function(){
+$(".fb").attr("href", "http://www.facebook.com/sharer.php?u="+location.href);
+$(".gp").attr("href", "https://plus.google.com/share?url="+location.href);
+$(".tt").attr("href", "https://twitter.com/share?url="+location.href);
 $('#user').click(function()
 {
     if("no" === "<?php echo $logged;?>"){
@@ -49,6 +61,15 @@ $('#mlink').click(function()
      $('#log').hide();
 });
 
+$('.imgpop').magnificPopup({
+		type: 'image',
+		closeOnContentClick: true,
+		mainClass: 'mfp-img-mobile',
+		image: {
+			verticalFit: true
+		}
+		
+	});
 });
 
 function changelike(imageid=0) {
@@ -72,7 +93,16 @@ function changelike(imageid=0) {
 }
 }
 </script>
+
+
 <script type="text/javascript">
+
+var poplo =new Array("textareaid");
+ENABLED_TIWEB = "http://api.tamilsg.com/data/lookuptable.js";
+var fileref = document.createElement('script');
+fileref.src = "http://api.tamilsg.com/hplus.js";
+document.documentElement.appendChild(fileref);
+
 function valid1()
 {
 if(document.register.mname.value!=="")
@@ -137,10 +167,13 @@ function valid3()
 return true;
 }
 </script>
+
+
+
 <body class="w3-light-grey w3-content" style="max-width:1600px">
 
 <!-- Sidebar/menu -->
-<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:250px;" id="mySidebar"><br>
+<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
   <div class="w3-container">
     <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu">
       <i class="fa fa-remove"></i>
@@ -149,22 +182,24 @@ return true;
     <h4><b>S.R ஜவகர்பாபு BE.MBA</b></h4>
     <p class="w3-text-grey">நகர்மன்றத் தலைவர், பட்டுக்கோட்டை</p>
   </div>
+
   <div class="w3-bar-block">
-                        <a href="index.php" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-medium"><i class="fa fa-newspaper-o fa-fw w3-margin-right w3-medium"></i> Timeline</a>
+                       <a href="index.php" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-grey w3-medium"><i class="fa fa-newspaper-o fa-fw w3-margin-right w3-medium"></i> Timeline</a>
                         <a href="profile.php" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-medium"><i class="fa fa-address-card-o fa-fw w3-margin-right w3-medium"></i>  Profile</a>
                         <a href="vote.php" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-medium"><i class="fa fa-thumbs-up fa-fw w3-margin-right w3-medium"></i>  Vote</a>
-                        <a href="gallery.php" onclick="w3_close()" class="w3-text-grey w3-bar-item w3-button w3-padding w3-medium"><i class="fa fa-picture-o fa-fw w3-margin-right w3-medium"></i>  Gallery</a>
+                        <a href="gallery.php" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-medium"><i class="fa fa-picture-o fa-fw w3-margin-right w3-medium"></i>  Gallery</a>
 			<a href="feedback.php" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-medium"><i class="fa fa-pencil-square-o fa-fw w3-margin-right w3-medium"></i>  Feedback</a>
   </div>
+
 </nav>
 
-<!-- Overlay effect when opening sidebar on small screens -->
+
 <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
-<!-- !PAGE CONTENT! -->
-<div class="w3-main" style="margin-left:250px">
 
-  <!-- Header -->
+<div class="w3-main" style="margin-left:300px">
+
+
   <header id="portfolio">
     <a id="user" class="w3-hover-indigo" href="#"><i class="fa fa-user fa-fw w3-margin-right w3-xxlarge w3-right" style="padding-top: 16px"></i></a>
     <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
@@ -175,7 +210,9 @@ return true;
     </div>
   </header>
   
-<div id="log" class="w3-modal" style="display:<?php echo $logdisp; ?>">
+
+
+  <div id="log" class="w3-modal" style="display:<?php echo $logdisp; ?>">
   <div class="w3-modal-content w3-animate-zoom">
 	<div class="w3-container w3-grey">
       <span onclick="document.getElementById('log').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
@@ -261,47 +298,50 @@ return true;
 	</div>
   </div>
 </div>
+  
 
-  <div class="w3-center w3-centered w3-container w3-padding-medium w3-border-bottom" style="align-content:center;margin-bottom:32px">
-      <h4><b>Photo Gallery</b></h4>
+
+  <div class="w3-center w3-centered w3-container w3-padding-small w3-border-bottom" style="align-content:center;margin-bottom:32px">
+      <h4><b>Timeline</b></h4>
       <hr>
-    <div class="w3-row-padding">
-     <?php mysqli_query ($conn,"set character_set_results='utf8'");
-	$data=mysqli_query($conn,"SELECT gid,title FROM gallery");
+
+<!-- Start of First photo line, One photo line can have two entries-->
+    <div class="w3-row-padding"> 
+
+	<!-- Start of first entry-->
+	<?php mysqli_query ($conn,"set character_set_results='utf8'");
+	$data=mysqli_query($conn,"SELECT tid,title,content,UNIX_TIMESTAMP(tdate) as timed FROM timeline");
     if(mysqli_num_rows($data) >0){
         while($val = mysqli_fetch_assoc($data)) {
-         ?>   
-    <div class="w3-third w3-container w3-margin-bottom">
-        <div class=" w3-white w3-container"><p class="w3-center"><b><?php echo $val['title'] ?></b></p></div>
-<a class="example-image-link" href="assets/img/<?php echo $val['gid'] ?>.jpg" data-lightbox="same" data-title="<?php echo $val['title'] ?>"><img class="example-image" src="assets/img/<?php echo $val['gid'] ?>.jpg" alt="<?php echo $val['title'] ?>" style="height: 280px; width:100%" class="w3-hover-opacity"/></a>
-      <div class="w3-container w3-white">
+         ?>
+    <div class="w3-half w3-container w3-margin-bottom"> 
 
-        <div class="w3-padding-top w3-padding-bottom w3-col s12"> 
+<a class="example-image-link" href="assets/img/<?php echo $val['tid'] ?>.jpg" data-lightbox="<?php echo $val['tid'] ?>" data-title="<?php echo $val['title'] ?>"><img class="example-image" src="assets/img/<?php echo $val['tid'] ?>.jpg" alt="<?php echo $val['title'] ?>" style="height: 280px; width:100%" class="w3-hover-opacity"/></a>
+
+      <div class="w3-container w3-white" style="height: 600px; position: relative;">
+          <div class="w3-col s12"><h5 class="w3-left w3-padding-left"><b><?php echo $val['title'] ?></b></h5> <p class="w3-right w3-text-grey w3-padding-right"><?php echo date("d-m-Y l",$val['timed']);?></p></div><br>
+        <p><?php echo $val['content'] ?></p>
+        <div class="w3-padding-bottom w3-col s12" style="position: absolute; bottom: 0;"> 
 		<table style="width: 100%;">
-                    <tr class="w3-padding-left w3-padding-right">
-				
-					
-					<td><i id="<?php echo $val['gid'] ?>" class="like w3-btn w3-grey w3-circle fa fa-thumbs-up w3-xlarge" onclick="changelike(this.id);"></i></td>
-					<td><span id="t<?php echo $val['gid'] ?>">0</span><span id="s<?php echo $val['gid'] ?>"> like</span></td>
-					</tr>
-			</table>
-				</div>
+		<tr><td ><i id="101" class="like w3-btn w3-grey w3-circle fa fa-thumbs-up w3-xlarge" onclick="changelike(this.id);"></i></td>
+                    <td><span id="t101">0</span><span id="s101"> like</span></td>
+		<td><div id="share-buttons"><a class="fb" target="_blank"><img src="assets/img/facebook.png" alt="Facebook" /></a>
+		<a class="gp" target="_blank"><img src="assets/img/google.png" alt="Google" /></a>
+		<a class="tt" target="_blank"><img src="assets/img/twitter.png" alt="Twitter" /></a></div></td>
+		</tr></table>
+	</div>
       </div>
-    </div>  
-		<?php }
-		    } ?>   
-  </div>
-  
-        
-        
-  </div>
+    </div>
+	<!-- end of first entry-->
+	<?php }
+    } ?>
+	
   </div>    
-
-  
   </div>
 <!-- End page content -->
+</div>
 <?php
-$rets=mysqli_query($conn,"SELECT mlike,COUNT(*) as count FROM memdetails where (mlike > 500 and mlike < 800) group by mlike");
+$rets=mysqli_query($conn,"SELECT mlike,COUNT(*) as count FROM memdetails where (mlike > 100 and mlike < 500) group by mlike");
     if(mysqli_num_rows($rets) >0){
         while($row = mysqli_fetch_assoc($rets)) {
             echo "<script>$(document).ready(function(){ $('#t".$row['mlike']."').text('".$row['count']."'); });</script>";
@@ -314,7 +354,7 @@ $rets=mysqli_query($conn,"SELECT mlike,COUNT(*) as count FROM memdetails where (
         }
     }
 if($logged=="yes"){
-    $retss=mysqli_query($conn,"SELECT mlike FROM memdetails where (mlike > 500 and mlike < 800) and mid='".$_SESSION['login']."'");
+    $retss=mysqli_query($conn,"SELECT mlike FROM memdetails where (mlike > 100 and mlike < 500) and mid='".$_SESSION['login']."'");
     if(mysqli_num_rows($retss) >0){
         while($rows = mysqli_fetch_assoc($retss)) {
             echo "<script>$(document).ready(function(){ $('#".$rows['mlike']."').removeClass('w3-grey'); $('#".$rows['mlike']."').addClass('w3-blue'); });</script>";

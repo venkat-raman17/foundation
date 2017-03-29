@@ -52,11 +52,5 @@ CREATE TABLE gallery (
   gdate timestamp DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-ALTER TABLE gallery AUTO_INCREMENT=501;
-
-INSERT INTO gallery(title) values ('S.R ஜவகர்பாபு BE.MBA');
-INSERT INTO gallery(title) values ('S.R ஜவகர்பாபு BE.MBA');
-INSERT INTO gallery(title) values ('S.R ஜவகர்பாபு BE.MBA');
-INSERT INTO gallery(title) values ('S.R ஜவகர்பாபு BE.MBA');
-INSERT INTO gallery(title) values ('S.R ஜவகர்பாபு BE.MBA');
+ALTER TABLE timeline AUTO_INCREMENT=501;
 

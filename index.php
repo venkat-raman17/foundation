@@ -9,6 +9,7 @@ include("content.php");
 <link rel="stylesheet" href="assets/css/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="assets/css/lightbox.min.css">
 <style type="text/css">
 #share-buttons img {
 width: 35px;
@@ -19,6 +20,7 @@ display: inline;
 }
 </style>
 <script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/lightbox-plus-jquery.min.js"></script>
 <script>
 $(document).ready(function(){
 $(".fb").attr("href", "http://www.facebook.com/sharer.php?u="+location.href);
@@ -58,6 +60,16 @@ $('#mlink').click(function()
      $('#fmcode').show();
      $('#log').hide();
 });
+
+$('.imgpop').magnificPopup({
+		type: 'image',
+		closeOnContentClick: true,
+		mainClass: 'mfp-img-mobile',
+		image: {
+			verticalFit: true
+		}
+		
+	});
 });
 
 function changelike(imageid=0) {
@@ -289,7 +301,7 @@ return true;
   
 
 
-  <div class="w3-center w3-centered w3-container w3-padding-medium w3-border-bottom" style="align-content:center;margin-bottom:32px">
+  <div class="w3-center w3-centered w3-container w3-padding-small w3-border-bottom" style="align-content:center;margin-bottom:32px">
       <h4><b>Timeline</b></h4>
       <hr>
 
@@ -298,19 +310,21 @@ return true;
 
 	<!-- Start of first entry-->
 	<?php mysqli_query ($conn,"set character_set_results='utf8'");
-	$data=mysqli_query($conn,"SELECT * FROM timeline");
+	$data=mysqli_query($conn,"SELECT tid,title,content,UNIX_TIMESTAMP(tdate) as timed FROM timeline");
     if(mysqli_num_rows($data) >0){
         while($val = mysqli_fetch_assoc($data)) {
          ?>
     <div class="w3-half w3-container w3-margin-bottom"> 
-      <img src="assets/img/<?php echo $val['tid'] ?>.jpg" alt="Norway" style="height: 250px; width:100%" class="w3-hover-opacity">
-      <div class="w3-container w3-white" style="height: 550px; position: relative;">
-          <div class="w3-col s12"><h5 class="w3-left w3-padding-left"><b><?php echo $val['title'] ?></b></h5> <p class="w3-right w3-text-grey w3-padding-right">20 Jan 2017</p></div><br>
+
+<a class="example-image-link" href="assets/img/<?php echo $val['tid'] ?>.jpg" data-lightbox="<?php echo $val['tid'] ?>" data-title="<?php echo $val['title'] ?>"><img class="example-image" src="assets/img/<?php echo $val['tid'] ?>.jpg" alt="<?php echo $val['title'] ?>" style="height: 280px; width:100%" class="w3-hover-opacity"/></a>
+
+      <div class="w3-container w3-white" style="height: 600px; position: relative;">
+          <div class="w3-col s12"><h5 class="w3-left w3-padding-left"><b><?php echo $val['title'] ?></b></h5> <p class="w3-right w3-text-grey w3-padding-right"><?php echo date("d-m-Y l",$val['timed']);?></p></div><br>
         <p><?php echo $val['content'] ?></p>
         <div class="w3-padding-bottom w3-col s12" style="position: absolute; bottom: 0;"> 
 		<table style="width: 100%;">
-		<tr><td ><i id="101" class="like w3-btn w3-grey w3-circle fa fa-thumbs-up w3-xlarge" onclick="changelike(this.id);"></i></td>
-                    <td><span id="t101">0</span><span id="s101"> like</span></td>
+		<tr><td ><i id="<?php echo $val['tid'] ?>" class="like w3-btn w3-grey w3-circle fa fa-thumbs-up w3-xlarge" onclick="changelike(this.id);"></i></td>
+                    <td><span id="t<?php echo $val['tid'] ?>">0</span><span id="s<?php echo $val['tid'] ?>"> like</span></td>
 		<td><div id="share-buttons"><a class="fb" target="_blank"><img src="assets/img/facebook.png" alt="Facebook" /></a>
 		<a class="gp" target="_blank"><img src="assets/img/google.png" alt="Google" /></a>
 		<a class="tt" target="_blank"><img src="assets/img/twitter.png" alt="Twitter" /></a></div></td>
