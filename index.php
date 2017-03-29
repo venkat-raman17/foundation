@@ -60,16 +60,6 @@ $('#mlink').click(function()
      $('#fmcode').show();
      $('#log').hide();
 });
-
-$('.imgpop').magnificPopup({
-		type: 'image',
-		closeOnContentClick: true,
-		mainClass: 'mfp-img-mobile',
-		image: {
-			verticalFit: true
-		}
-		
-	});
 });
 
 function changelike(imageid=0) {
@@ -97,11 +87,7 @@ function changelike(imageid=0) {
 
 <script type="text/javascript">
 
-var poplo =new Array("textareaid");
-ENABLED_TIWEB = "http://api.tamilsg.com/data/lookuptable.js";
-var fileref = document.createElement('script');
-fileref.src = "http://api.tamilsg.com/hplus.js";
-document.documentElement.appendChild(fileref);
+
 
 function valid1()
 {
@@ -309,7 +295,7 @@ return true;
     <div class="w3-row-padding"> 
 
 	<!-- Start of first entry-->
-	<?php mysqli_query ($conn,"set character_set_results='utf8'");
+	<?php 
 	$data=mysqli_query($conn,"SELECT tid,title,content,UNIX_TIMESTAMP(tdate) as timed FROM timeline");
     if(mysqli_num_rows($data) >0){
         while($val = mysqli_fetch_assoc($data)) {

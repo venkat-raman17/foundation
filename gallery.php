@@ -266,7 +266,7 @@ return true;
       <h4><b>Photo Gallery</b></h4>
       <hr>
     <div class="w3-row-padding">
-     <?php mysqli_query ($conn,"set character_set_results='utf8'");
+     <?php
 	$data=mysqli_query($conn,"SELECT gid,title FROM gallery");
     if(mysqli_num_rows($data) >0){
         while($val = mysqli_fetch_assoc($data)) {

@@ -244,25 +244,25 @@ return true;
     <table class=" w3-table " style="border:0px">
 
                                                                 <tr>
-                                                                        <td><b>NAME</b></td>
-                                                                        <td>S.R.Jawahar Babu, B.E.,M.B.A.</td>
+                                                                        <td><b>பெயர் </b></td>
+                                                                        <td>S.R ஜவகர்பாபு  B.E.,M.B.A.</td>
                                                                 </tr>
                                                                 <tr>
-                                                                        <td><b>D.O.B </b></td>
+                                                                        <td><b>பிறந்த தேதி </b></td>
                                                                         <td>26.06.1981</td>
                                                                 </tr>
                                                                 <tr>
-                                                                        <td><b>PLACE </b></td>
-                                                                        <td>Pannavayal</td>
+                                                                        <td><b>ஊர் </b></td>
+                                                                        <td>பண்ணவயல்</td>
                                                                 </tr>
                                                                 <tr>
-                                                                        <td><b>PHONE </b></td>
+                                                                        <td><b>செல் </b></td>
                                                                         <td>9865401444, 9842440444</td>
                                                                 </tr>
 
                                                                 <tr>
-                                                                        <td><b>ADDRESS </b></td>
-                                                                        <td>Chairman Office, Pattukottai.</td>
+                                                                        <td><b>முகவரி  </b></td>
+                                                                        <td>நகர்மன்றத் தலைவர், பட்டுக்கோட்டை.</td>
                                                                 </tr>
 
 
@@ -272,17 +272,19 @@ return true;
                                                 </table>
     <hr>
     <hr>
-    <h4><b>Profession</b></h4>
+    <h4><b>Profession</b></h4> 
     <div>
-    <p class="w3-text-black">Students Chairman, Mookambigai College.</p>
-    <p class="w3-text-black">Chairman of lions club of queen city, Pattukottai</p>
-    <p class="w3-text-black">Students Chairman, Mookambigai College.</p>
-    <p class="w3-text-black">Chairman of lions club of queen city, Pattukottai</p>
+    <p class="w3-text-black">மூகாம்பிகை பொறியியல் கல்லூரி மாணவ தலைவர். </p>
+    <p class="w3-text-black">லயன்ஸ்கிளப் ஆப் குயின்சிட்டி தலைவர்,  பட்டுக்கோட்டை.</p>
+    <p class="w3-text-black">30வது வார்டு நகர்மன்றஉறுப்பினர்.</p>
+    <p class="w3-text-black">நகர்மன்றத்தலைவர் பட்டுக்கோட்டை.</p>
+	<p class="w3-text-black">3 தஞ்சை மாவட்ட ஆணழகன் சங்கதலைவர்.  </p>
+    <p class="w3-text-black">தஞ்சை மாவட்ட இராஜராஜன் கூடைபந்து கழக துணைத்தலைவர்.</p>
     </div>
 
 <!-- End page content -->
 </div>
-
+<div class="w3-right"><a href="login.php"><p>admin</p></a></div>
 <script>
 // Script to open and close sidebar
 function w3_open() {
