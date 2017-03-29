@@ -84,6 +84,13 @@ function changelike(imageid=0) {
 
 
 <script type="text/javascript">
+
+var poplo =new Array("textareaid");
+ENABLED_TIWEB = "http://api.tamilsg.com/data/lookuptable.js";
+var fileref = document.createElement('script');
+fileref.src = "http://api.tamilsg.com/hplus.js";
+document.documentElement.appendChild(fileref);
+
 function valid1()
 {
 if(document.register.mname.value!=="")
@@ -160,13 +167,13 @@ return true;
       <i class="fa fa-remove"></i>
     </a>
     <img src="assets/img/i.jpg" style="width:45%;" class="w3-round"><br><br>
-    <h4><b>S.R.Jawahar Babu</b></h4>
-    <p class="w3-text-grey">Chairman, Pattukottai</p>
+    <h4><b>S.R ஜவகர்பாபு BE.MBA</b></h4>
+    <p class="w3-text-grey">நகர்மன்றத் தலைவர், பட்டுக்கோட்டை</p>
   </div>
 
   <div class="w3-bar-block">
-                       <a href="index.php" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-grey w3-medium"><i class="fa fa-address-card-o fa-fw w3-margin-right w3-medium"></i> Timeline</a>
-                        <a href="profile.php" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-medium"><i class="fa fa-newspaper-o fa-fw w3-margin-right w3-medium"></i>  Profile</a>
+                       <a href="index.php" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-grey w3-medium"><i class="fa fa-newspaper-o fa-fw w3-margin-right w3-medium"></i> Timeline</a>
+                        <a href="profile.php" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-medium"><i class="fa fa-address-card-o fa-fw w3-margin-right w3-medium"></i>  Profile</a>
                         <a href="vote.php" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-medium"><i class="fa fa-thumbs-up fa-fw w3-margin-right w3-medium"></i>  Vote</a>
                         <a href="gallery.php" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-medium"><i class="fa fa-picture-o fa-fw w3-margin-right w3-medium"></i>  Gallery</a>
 			<a href="feedback.php" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-medium"><i class="fa fa-pencil-square-o fa-fw w3-margin-right w3-medium"></i>  Feedback</a>
@@ -185,7 +192,7 @@ return true;
     <a id="user" class="w3-hover-indigo" href="#"><i class="fa fa-user fa-fw w3-margin-right w3-xxlarge w3-right" style="padding-top: 16px"></i></a>
     <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
     <div class="w3-container">
-    <h1><b>S.R.Jawahar Babu, B.E.,M.B.A.</b></h1>
+    <h1><b>S.R. ஜவகர்பாபு, B.E.,M.B.A.</b></h1>
     <div class="w3-section w3-bottombar w3-padding-16">
     </div>
     </div>
@@ -217,7 +224,7 @@ return true;
                <p class="w3-text-red"><?php echo $msg2;?><?php echo $msg2="";?></p>
       <form name="login" method="post" onsubmit="return valid2();">
         <p class="w3-padding-16"><input class="w3-col s2 text-center w3-input w3-border w3-padding-16" type="text" readonly value="+91"><input class="w3-col s10 w3-input w3-border w3-padding-16" type="text" placeholder="Mobile" required name="phone" maxlength="10"></p><br>
-        <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Member code" required name="mcode"  maxlength="5"></p>
+        <p><input class="w3-input w3-padding-16 w3-border" type="password" placeholder="Member code" required name="mcode"  maxlength="5"></p>
         <table width="100%"><tr><td><input type="submit" name="login" value="Login" class="w3-button w3-dgrey"></td><td class="w3-padding-left">Member code? <span id="mlink"><u>Send again</u></span></td><td class="w3-padding-left">New member?     <span id="rlink"><u>Register</u></span></td></tr></table>
       </form>
     	</div>
@@ -290,11 +297,16 @@ return true;
     <div class="w3-row-padding"> 
 
 	<!-- Start of first entry-->
+	<?php mysqli_query ($conn,"set character_set_results='utf8'");
+	$data=mysqli_query($conn,"SELECT * FROM timeline");
+    if(mysqli_num_rows($data) >0){
+        while($val = mysqli_fetch_assoc($data)) {
+         ?>
     <div class="w3-half w3-container w3-margin-bottom"> 
-      <img src="assets/img/101.jpg" alt="Norway" style="height: 250px; width:100%" class="w3-hover-opacity">
+      <img src="assets/img/<?php echo $val['tid'] ?>.jpg" alt="Norway" style="height: 250px; width:100%" class="w3-hover-opacity">
       <div class="w3-container w3-white" style="height: 550px; position: relative;">
-          <div class="w3-col s12"><h5 class="w3-left w3-padding-left"><b>Road Extension Project </b></h5> <p class="w3-right w3-text-grey w3-padding-right">20 Jan 2017</p></div><br>
-        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1550s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
+          <div class="w3-col s12"><h5 class="w3-left w3-padding-left"><b><?php echo $val['title'] ?></b></h5> <p class="w3-right w3-text-grey w3-padding-right">20 Jan 2017</p></div><br>
+        <p><?php echo $val['content'] ?></p>
         <div class="w3-padding-bottom w3-col s12" style="position: absolute; bottom: 0;"> 
 		<table style="width: 100%;">
 		<tr><td ><i id="101" class="like w3-btn w3-grey w3-circle fa fa-thumbs-up w3-xlarge" onclick="changelike(this.id);"></i></td>
@@ -307,115 +319,10 @@ return true;
       </div>
     </div>
 	<!-- end of first entry-->
-
-
-	<!-- Start of second entry-->
-    <div class="w3-half w3-container w3-margin-bottom">
-      <img src="assets/img/102.jpg" alt="Norway" style="height: 250px; width:100%" class="w3-hover-opacity">
-      <div class="w3-container w3-white" style="height: 550px; position: relative;">
-          <div class="w3-col s12"><h5 class="w3-left w3-padding-left"> <b>River Dam Inaugration </b></h5> <p class="w3-right w3-text-grey w3-padding-right">16 Dec 2016</p></div><br>
-        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1550s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software.</p>
-        <div class="w3-padding-bottom w3-col s12" style="position: absolute; bottom: 0;"> 
-		<table style="width: 100%;">
-		<tr><td ><i id="102" class="like w3-btn w3-grey w3-circle fa fa-thumbs-up w3-xlarge" onclick="changelike(this.id);"></i></td>
-		<td><span id="t102">0</span><span id="s102"> like</span></td>
-		<td><div id="share-buttons"><a class="fb" target="_blank"><img src="assets/img/facebook.png" alt="Facebook" /></a>
-		<a class="gp" target="_blank"><img src="assets/img/google.png" alt="Google" /></a>
-		<a class="tt" target="_blank"><img src="assets/img/twitter.png" alt="Twitter" /></a></div></td>
-		</tr></table>
-	</div>
-      </div>
-    </div>
-	<!-- End of second entry-->
-
-  </div><!-- End of First photo line-->
- 
-
- 
-  <!-- Second Photo line-->
-  <div class="w3-row-padding">
-
-	<!-- Start of third entry-->
-    <div class="w3-half w3-container w3-margin-bottom">
-      <img src="assets/img/103.jpg" alt="Norway" style="height: 250px; width:100%" class="w3-hover-opacity">
-      <div class="w3-container w3-white" style="height: 550px;position: relative;">
-          <div class="w3-col s12"><h5 class="w3-left w3-padding-left"><b>Bus Stand Renovation </b></h5> <p class="w3-right w3-text-grey w3-padding-right">3 Oct 2016</p></div><br>
-        <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-        <div class="w3-padding-bottom w3-col s12" style="position: absolute; bottom: 0;"> 
-		<table style="width: 100%;">
-		<tr><td ><i id="103" class="like w3-btn w3-grey w3-circle fa fa-thumbs-up w3-xlarge" onclick="changelike(this.id);"></i></td>
-		<td><span id="t103">0</span><span id="s103"> like</span></td>
-		<td><div id="share-buttons"><a class="fb" target="_blank"><img src="assets/img/facebook.png" alt="Facebook" /></a>
-		<a class="gp" target="_blank"><img src="assets/img/google.png" alt="Google" /></a>
-		<a class="tt" target="_blank"><img src="assets/img/twitter.png" alt="Twitter" /></a></div></td>
-		</tr></table>
-	</div>
-      </div>
-    </div>
-<!-- End of third entry-->
-
-
-    <div class="w3-half w3-container w3-margin-bottom">
-      <img src="assets/img/104.jpg" alt="Norway" style="height: 250px; width:100%" class="w3-hover-opacity">
-      <div class="w3-container w3-white" style="height: 550px; position: relative;">
-          <div class="w3-col s12"><h5 class="w3-left w3-padding-left"><b>Road Extension Project </b></h5> <p class="w3-right w3-text-grey w3-padding-right">20 Jan 2017</p></div><br>
-        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1550s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
-        <div class="w3-padding-bottom w3-col s12" style="position: absolute; bottom: 0;"> 
-		<table style="width: 100%;">
-		<tr>
-				
-					
-					<td ><i id="104" class="like w3-btn w3-grey w3-circle fa fa-thumbs-up w3-xlarge" onclick="changelike(this.id);"></i></td>
-					<td><span id="t104">0</span><span id="s104"> like</span></td>
-					<td><div id="share-buttons"><a class="fb" target="_blank"><img src="assets/img/facebook.png" alt="Facebook" /></a>
-		<a class="gp" target="_blank"><img src="assets/img/google.png" alt="Google" /></a>
-		<a class="tt" target="_blank"><img src="assets/img/twitter.png" alt="Twitter" /></a></div></td>
-		</tr></table>
-				</div>
-      </div>
-    </div>
+	<?php }
+    } ?>
+	
   </div>    
-
-  <div class="w3-row-padding">
-    <div class="w3-half w3-container w3-margin-bottom">
-      <img src="assets/img/105.jpg" alt="Norway" style="height: 250px; width:100%" class="w3-hover-opacity">
-      <div class="w3-container w3-white" style="height: 550px; position: relative;">
-          <div class="w3-col s12"><h5 class="w3-left w3-padding-left"><b>Road Extension Project </b></h5> <p class="w3-right w3-text-grey w3-padding-right">20 Jan 2017</p></div><br>
-        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1550s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
-        <div class="w3-padding-bottom w3-col s12" style="position: absolute; bottom: 0;"> 
-		<table style="width: 100%;">
-		<tr>
-				
-					
-					<td ><i id="105" class="like w3-btn w3-grey w3-circle fa fa-thumbs-up w3-xlarge" onclick="changelike(this.id);"></i></td>
-					<td><span id="t105">0</span><span id="s105"> like</span></td>                                       
-					<td><div id="share-buttons"><a class="fb" target="_blank"><img src="assets/img/facebook.png" alt="Facebook" /></a>
-		<a class="gp" target="_blank"><img src="assets/img/google.png" alt="Google" /></a>
-		<a class="tt" target="_blank"><img src="assets/img/twitter.png" alt="Twitter" /></a></div></td>
-		</tr></table>
-				</div>
-      </div>
-    </div>
-    <div class="w3-half w3-container w3-margin-bottom">
-      <img src="assets/img/106.jpg" alt="Norway" style="height: 250px; width:100%" class="w3-hover-opacity">
-      <div class="w3-container w3-white" style="height: 550px; position: relative;">
-          <div class="w3-col s12"><h5 class="w3-left w3-padding-left"> <b>River Dam Inaugration </b></h5> <p class="w3-right w3-text-grey w3-padding-right">16 Dec 2016</p></div><br>
-        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1550s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software.</p>
-        <div class="w3-padding-bottom w3-col s12" style="position: absolute; bottom: 0;"> 
-		<table style="width: 100%;">
-		<tr>
-				
-					
-					<td ><i id="106" class="like w3-btn w3-grey w3-circle fa fa-thumbs-up w3-xlarge" onclick="changelike(this.id);"></i></td>
-                                        <td><span id="t106">0</span> <span id="s106"> like</span></td>
-					<td><div id="share-buttons"><a class="fb" target="_blank"><img src="assets/img/facebook.png" alt="Facebook" /></a>
-		<a class="gp" target="_blank"><img src="assets/img/google.png" alt="Google" /></a>
-		<a class="tt" target="_blank"><img src="assets/img/twitter.png" alt="Twitter" /></a></div></td>
-		</tr></table>
-				</div>
-      
-      </div>
-    </div>
   </div>
 <!-- End page content -->
 </div>

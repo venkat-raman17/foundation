@@ -143,12 +143,12 @@ return true;
       <i class="fa fa-remove"></i>
     </a>
     <img src="assets/img/i.jpg" style="width:45%;" class="w3-round"><br><br>
-    <h4><b>S.R.Jawahar Babu</b></h4>
-    <p class="w3-text-grey">Chairman, Pattukottai</p>
+    <h4><b>S.R ஜவகர்பாபு BE.MBA</b></h4>
+    <p class="w3-text-grey">நகர்மன்றத் தலைவர், பட்டுக்கோட்டை</p>
   </div>
   <div class="w3-bar-block">
-                        <a href="index.php" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-medium"><i class="fa fa-address-card-o fa-fw w3-margin-right w3-medium"></i> Timeline</a>
-                        <a href="profile.php" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-medium"><i class="fa fa-newspaper-o fa-fw w3-margin-right w3-medium"></i>  Profile</a>
+                        <a href="index.php" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-medium"><i class="fa fa-newspaper-o fa-fw w3-margin-right w3-medium"></i> Timeline</a>
+                        <a href="profile.php" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-medium"><i class="fa fa-address-card-o fa-fw w3-margin-right w3-medium"></i>  Profile</a>
                         <a href="vote.php" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-medium"><i class="fa fa-thumbs-up fa-fw w3-margin-right w3-medium"></i>  Vote</a>
                         <a href="gallery.php" onclick="w3_close()" class="w3-text-grey w3-bar-item w3-button w3-padding w3-medium"><i class="fa fa-picture-o fa-fw w3-margin-right w3-medium"></i>  Gallery</a>
 			<a href="feedback.php" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-medium"><i class="fa fa-pencil-square-o fa-fw w3-margin-right w3-medium"></i>  Feedback</a>
@@ -166,7 +166,7 @@ return true;
     <a id="user" class="w3-hover-indigo" href="#"><i class="fa fa-user fa-fw w3-margin-right w3-xxlarge w3-right" style="padding-top: 16px"></i></a>
     <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
     <div class="w3-container">
-    <h1><b>S.R.Jawahar Babu, B.E.,M.B.A.</b></h1>
+    <h1><b>S.R. ஜவகர்பாபு, B.E.,M.B.A.</b></h1>
     <div class="w3-section w3-bottombar w3-padding-16">
     </div>
     </div>
@@ -196,7 +196,7 @@ return true;
                <p class="w3-text-red"><?php echo $msg2;?><?php echo $msg2="";?></p>
       <form name="login" method="post" onsubmit="return valid2();">
         <p class="w3-padding-16"><input class="w3-col s2 text-center w3-input w3-border w3-padding-16" type="text" readonly value="+91"><input class="w3-col s10 w3-input w3-border w3-padding-16" type="text" placeholder="Mobile" required name="phone" maxlength="10"></p><br>
-        <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Member code" required name="mcode"  maxlength="5"></p>
+        <p><input class="w3-input w3-padding-16 w3-border" type="password" placeholder="Member code" required name="mcode"  maxlength="5"></p>
         <table width="100%"><tr><td><input type="submit" name="login" value="Login" class="w3-button w3-dgrey"></td><td class="w3-padding-left">Member code? <span id="mlink"><u>Send again</u></span></td><td class="w3-padding-left">New member?     <span id="rlink"><u>Register</u></span></td></tr></table>
       </form>
     	</div>
