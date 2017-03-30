@@ -296,7 +296,7 @@ return true;
 
 	<!-- Start of first entry-->
 	<?php 
-	$data=mysqli_query($conn,"SELECT tid,title,content,UNIX_TIMESTAMP(tdate) as timed FROM timeline");
+	$data=mysqli_query($conn,"SELECT tid,title,content,UNIX_TIMESTAMP(tdate) as timed FROM timeline ORDER BY tdate DESC");
     if(mysqli_num_rows($data) >0){
         while($val = mysqli_fetch_assoc($data)) {
          ?>

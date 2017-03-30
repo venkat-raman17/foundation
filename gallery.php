@@ -267,7 +267,7 @@ return true;
       <hr>
     <div class="w3-row-padding">
      <?php
-	$data=mysqli_query($conn,"SELECT gid,title FROM gallery");
+	$data=mysqli_query($conn,"SELECT gid,title FROM gallery ORDER BY gdate DESC");
     if(mysqli_num_rows($data) >0){
         while($val = mysqli_fetch_assoc($data)) {
          ?>   

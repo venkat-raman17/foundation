@@ -13,9 +13,9 @@ if(isset($_POST["newt"])) {
 $titlet=test_input($_POST['titlet']);
 $content=test_input($_POST['content']);
 $tdate=test_input($_POST['tdate']);
-$ret=mysqli_query($conn,"SELECT AUTO_INCREMENT as next FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME   = 'timeline'");
+$ret=mysqli_query($conn,"SELECT max(tid) as mtid FROM timeline");
 $num=mysqli_fetch_assoc($ret);
-$newname=$num['next'];
+$newname=$num['mtid']+1;
 $target_dir = "assets/img/";
 $temp = explode(".", $_FILES["filet"]["name"]);
 $newfilename = (string)$newname . '.' . end($temp);

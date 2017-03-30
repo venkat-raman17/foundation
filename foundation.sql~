@@ -60,10 +60,10 @@ INSERT INTO gallery(title) values ('S.R ஜவகர்பாபு BE.MBA');
 INSERT INTO gallery(title) values ('S.R ஜவகர்பாபு BE.MBA');
 INSERT INTO gallery(title) values ('S.R ஜவகர்பாபு BE.MBA');
 
-DROP TABLE IF EXISTS admins;
-CREATE TABLE admins (
+DROP TABLE IF EXISTS admin;
+CREATE TABLE admin (
   username varchar(15) NOT NULL PRIMARY KEY,
   password varchar(15) NOT NULL
 ) ENGINE=InnoDB;
 
-INSERT INTO admins VALUES ('admin','admin123');
+INSERT INTO admin VALUES ('admin','admin123');

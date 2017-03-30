@@ -27,6 +27,7 @@ if(document.newt.tdate.value!=="")
  }
 return true;    
 }
+}
 </script>
 
 

@@ -7,7 +7,7 @@ if(isset($_POST['alogin']))
 {
 $username=test_input($_POST['username']);
 $password=test_input($_POST['password']);
-$ret=mysqli_query($conn,"SELECT * FROM admins WHERE username='".$username."'");
+$ret=mysqli_query($conn,"SELECT * FROM admin WHERE username='".$username."'");
 $num=mysqli_fetch_assoc($ret);
 if($num>0)
 {
