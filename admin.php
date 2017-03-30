@@ -3,6 +3,7 @@ session_start();
 include("adphp.php");
 include("checklogin.php");
 check_login();
+$msg1="";
 ?>
 <!DOCTYPE html>
 <html>
@@ -27,7 +28,7 @@ $(document).ready(function(){
 
 
 <body class="w3-light-grey w3-content" style="max-width:1600px">
-<div class="w3-main" style="margin-left:300px">
+<div class="w3-main" class="w3-padding-small">
 
 
   <header id="portfolio">
@@ -46,8 +47,18 @@ $(document).ready(function(){
       <hr>
     <div class="w3-row-padding"> 
 
-    <div class="w3-col s12 w3-container w3-margin-bottom"> 
-	
+    <div class="w3-half w3-container w3-margin-bottom"> 
+	<h6 class=" w3-padding-top"><b>Add Post</b></h6>
+    <div class="w3-card w3-grey w3-padding-8">
+	<p class="w3-text-red"><?php echo $msg1;?><?php echo $msg1="";?></p>
+        <form name="newt" id="newt" method="post" enctype="multipart/form-data">
+			<p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Title" required name="titlet" maxlength="50"></p>
+			<div class="w3-padding-16">Image <input type="file" name="filet" id="filetid">
+			Post date <input type="date" name="tdate" value="<?php echo date('Y-m-d');?>" step="1"></div>
+            <div><textarea class="w3-input w3-padding-16" maxlength="510" rows="15" cols="35" wrap="soft" placeholder="Content" required name="content" form="newt"></textarea></div>
+            <div class="w3-padding-16"><input name="newt" class="w3-button w3-dgrey" value="Add" type="submit"></div>
+        </form>
+    </div>
   </div>
 
   
