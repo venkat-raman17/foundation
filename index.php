@@ -287,7 +287,7 @@ return true;
   
 
 
-  <div class="w3-center w3-centered w3-container w3-padding-small w3-border-bottom" style="align-content:center;margin-bottom:32px">
+  <div class="w3-center w3-centered w3-container w3-padding-tiny w3-border-bottom" style="align-content:center;margin-bottom:32px">
       <h4><b>Timeline</b></h4>
       <hr>
 
@@ -327,7 +327,7 @@ return true;
 <!-- End page content -->
 </div>
 <?php
-$rets=mysqli_query($conn,"SELECT mlike,COUNT(*) as count FROM memdetails where (mlike > 100 and mlike < 500) group by mlike");
+$rets=mysqli_query($conn,"SELECT mlike,COUNT(*) as count FROM memdetails where (mlike > 100 and mlike < 5000) group by mlike");
     if(mysqli_num_rows($rets) >0){
         while($row = mysqli_fetch_assoc($rets)) {
             echo "<script>$(document).ready(function(){ $('#t".$row['mlike']."').text('".$row['count']."'); });</script>";
@@ -340,7 +340,7 @@ $rets=mysqli_query($conn,"SELECT mlike,COUNT(*) as count FROM memdetails where (
         }
     }
 if($logged=="yes"){
-    $retss=mysqli_query($conn,"SELECT mlike FROM memdetails where (mlike > 100 and mlike < 500) and mid='".$_SESSION['login']."'");
+    $retss=mysqli_query($conn,"SELECT mlike FROM memdetails where (mlike > 100 and mlike < 5000) and mid='".$_SESSION['login']."'");
     if(mysqli_num_rows($retss) >0){
         while($rows = mysqli_fetch_assoc($retss)) {
             echo "<script>$(document).ready(function(){ $('#".$rows['mlike']."').removeClass('w3-grey'); $('#".$rows['mlike']."').addClass('w3-blue'); });</script>";
